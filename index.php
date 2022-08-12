@@ -10,8 +10,8 @@ $wordsFile = './listWordSearch.txt';
 
 $words = explode("\n", file_get_contents($wordsFile));
 
-echo '<h2>Слова что будем искать в тексте</h2>';
-echo '<pre>', print_r($words, true), '</pre>';
+// echo '<h2>Слова что будем искать в тексте</h2>';
+// echo '<pre>', print_r($words, true), '</pre>';
 
 function readTheFile($path)
 {
@@ -24,8 +24,6 @@ function readTheFile($path)
     fclose($handle);
 }
 
-$iterator = readTheFile($bookFile);
-
 $buffer = "";
 
 // тут соберём сколько каких слов найдено
@@ -34,6 +32,8 @@ foreach ($words as $word) {
     if (!empty($word))
         $result[$word] = 0;
 }
+
+$iterator = readTheFile($bookFile);
 
 // прокручиваем весь файл (так для экономии памяти)
 foreach ($iterator as $str) {
@@ -59,6 +59,10 @@ echo '<pre>', print_r($result, true), '</pre>';
 echo '<Br/>';
 echo '<Br/>';
 echo '<Br/>';
+echo 'Размер файла книжки: ' . round(filesize($bookFile) / 1024 / 1024, 2) . ' Мб';
+echo '<Br/>';
+echo 'Сколько слов ищем: ' . sizeof($words);
+echo '<Br/>';
 echo 'Время выполнения скрипта: ' . round(microtime(true) - $start, 4) . ' сек.';
 echo '<br/>';
-echo 'Использовано памяти: ' . round( (memory_get_usage() - $memory)/1024,2) . ' Kбайт';
+echo 'Использовано памяти: ' . round((memory_get_usage() - $memory) / 1024, 2) . ' Kбайт';
