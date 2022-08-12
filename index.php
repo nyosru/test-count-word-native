@@ -10,18 +10,28 @@ $wordsFile = './listWordSearch.txt';
 
 $words = explode("\n", file_get_contents($wordsFile));
 
-// echo '<h2>Слова что будем искать в тексте</h2>';
-// echo '<pre>', print_r($words, true), '</pre>';
+echo '<h2>Слова что будем искать в тексте</h2>';
+echo '<pre style="display; block; max-height:200px; padding: 10px; border: 1px solid green; overflow: auto;" >', print_r($words, true), '</pre>';
+
+echo '<style> div{ display:inline-block; width: 250px; } </style>';
+
+// сразу показываем что за слова будем искать
+flush();
 
 function readTheFile($path)
 {
-    $handle = fopen($path, "r");
 
-    while (!feof($handle)) {
-        yield trim(fgets($handle));
+    $file = new SplFileObject($path);
+    while (!$file->eof()) {
+        $str = $file->current();
+        $file->next();
+
+        for ($i = 0; $i < 3; $i++) {
+            $str .= ' ' . $file->current();
+            $file->next();
+        }
+        yield $str;
     }
-
-    fclose($handle);
 }
 
 $buffer = "";
@@ -52,10 +62,14 @@ foreach ($iterator as $str) {
             $result[$word] += sizeof($matches[0]);
         }
     }
+    // echo ' . ';
+    // echo ' <div>. '. strlen($str) .' +++ '. round(( $last - ( round( microtime(true) - $start, 4) ) ),4).' </div> ';
+    // $last = round(microtime(true) - $start, 4);
+    // flush();
 }
 
 echo '<h2>Каких слов сколько нашли</h2>';
-echo '<pre>', print_r($result, true), '</pre>';
+echo '<pre style="display; block; max-height:200px; padding: 10px; border: 1px solid green; overflow: auto;" >', print_r($result, true), '</pre>';
 echo '<Br/>';
 echo '<Br/>';
 echo '<Br/>';
