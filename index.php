@@ -20,7 +20,7 @@ flush();
 
 function readTheFile($path)
 {
-
+    // читаем по 4 строки .. получается норм по времени .. 30 сек
     $file = new SplFileObject($path);
     while (!$file->eof()) {
         $str = $file->current();
