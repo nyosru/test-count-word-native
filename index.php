@@ -1,5 +1,6 @@
 <?php
 
+$memory = memory_get_usage();
 $start = microtime(true);
 
 // книжка
@@ -59,3 +60,5 @@ echo '<Br/>';
 echo '<Br/>';
 echo '<Br/>';
 echo 'Время выполнения скрипта: ' . round(microtime(true) - $start, 4) . ' сек.';
+echo '<br/>';
+echo 'Использовано памяти: ' . round( (memory_get_usage() - $memory)/1024,2) . ' Kбайт';
